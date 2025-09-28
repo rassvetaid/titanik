@@ -1,0 +1,90 @@
+import React, { useState } from 'react';
+import './SearchFiltr.scss';
+import { PassengerFilter } from '../types';
+
+interface SearchFiltrProps {
+  onFilterChange: (filters: PassengerFilter) => void;
+  filtrPs: PassengerFilter;
+}
+
+function SearchFiltr({ onFilterChange, filtrPs }: SearchFiltrProps) {
+    const [filters, setFilters] = useState<PassengerFilter>(filtrPs);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFilters((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const searchItem = () => {
+        onFilterChange(filters);
+    };
+
+    return (
+        <div className="filterblock">
+            <label className="label" htmlFor="namePs">
+                Name
+                <input
+                    type="text"
+                    name="name"
+                    id="namePs"
+                    value={filters.name}
+                    onChange={handleInputChange}
+                    placeholder="Enter name..."
+                />
+            </label>
+
+            <label className="label" htmlFor="agePs">
+                Age
+                <input
+                    type="number"
+                    name="age"
+                    id="agePs"
+                    value={filters.age}
+                    onChange={handleInputChange}
+                    placeholder="Enter age..."
+                />
+            </label>
+
+            <label className="label" htmlFor="genderPs">
+                Gender
+                <select
+                    name="gender"
+                    id="genderPs"
+                    value={filters.gender}
+                    onChange={handleInputChange}
+                >
+                    <option value="">All</option>
+                    <option value="male">M</option>
+                    <option value="female">W</option>
+                </select>
+            </label>
+
+            <label className="label" htmlFor="survivedPs">
+                Survived
+                <select
+                    name="survived"
+                    id="survivedPs"
+                    value={filters.survived}
+                    onChange={handleInputChange}
+                >
+                    <option value="">All</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </label>
+            <button
+                type="button"
+                className="buttonSearch"
+                onClick={searchItem}
+            >
+                Search
+            </button>
+
+        </div>
+    );
+}
+
+export default SearchFiltr;
