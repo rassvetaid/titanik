@@ -1,10 +1,10 @@
 export interface Passenger {
-  id: string;
+  id: number;
   class: string;
-  survived: string;
+  survived: boolean;
   name: string;
   gender: string;
-  age: string;
+  age: number;
   sibsp: string;
   parch: string;
   ticket: string;
