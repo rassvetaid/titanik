@@ -11,11 +11,26 @@ function SearchFiltr({ onFilterChange, filtrPs }: SearchFiltrProps) {
     const [filters, setFilters] = useState<PassengerFilter>(filtrPs);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
+        const { name, value, type } = e.target;
+
+        if (name === 'age' && type === 'number') {
+            const numericValue = parseFloat(value);
+
+            if (numericValue < 0) {
+                return;
+            }
+        }
+
         setFilters((prev) => ({
             ...prev,
             [name]: value,
         }));
+    };
+
+    const handleAgeKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === '-' || e.key === 'e' || e.key === 'E') {
+            e.preventDefault();
+        }
     };
 
     const searchItem = () => {
@@ -42,8 +57,10 @@ function SearchFiltr({ onFilterChange, filtrPs }: SearchFiltrProps) {
                     type="number"
                     name="age"
                     id="agePs"
+                    min="0"
                     value={filters.age}
                     onChange={handleInputChange}
+                    onKeyDown={handleAgeKeyDown}
                     placeholder="Enter age..."
                 />
             </label>

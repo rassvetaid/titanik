@@ -7,7 +7,7 @@ const API_URL = 'https://raw.githubusercontent.com/altkraft/for-applicants/maste
 function filterPassengers(allData: Passenger[], filterList: PassengerFilter): Passenger[] {
     return allData.filter((item) => {
         // name
-        if (filterList.name && !item.name?.toLowerCase().includes(filterList.name.toLowerCase())) {
+        if (filterList.name && !item.name?.toLowerCase().includes(filterList.name.trim().toLowerCase())) {
             return false;
         }
 
