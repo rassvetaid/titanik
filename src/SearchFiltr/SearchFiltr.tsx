@@ -33,6 +33,19 @@ function SearchFiltr({ onFilterChange, filtrPs }: SearchFiltrProps) {
         }
     };
 
+    const handleAgePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+        const pastedData = e.clipboardData.getData('text');
+
+        if (['-', 'e', 'E'].some((char) => pastedData.includes(char))) {
+            e.preventDefault();
+
+            setFilters((prev) => ({
+                ...prev,
+                age: '',
+            }));
+        }
+    };
+
     const searchItem = () => {
         onFilterChange(filters);
     };
@@ -61,6 +74,7 @@ function SearchFiltr({ onFilterChange, filtrPs }: SearchFiltrProps) {
                     value={filters.age}
                     onChange={handleInputChange}
                     onKeyDown={handleAgeKeyDown}
+                    onPaste={handleAgePaste}
                     placeholder="Enter age..."
                 />
             </label>
